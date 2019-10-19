@@ -12,7 +12,7 @@ import 'charts.dart' as YangCharts;
 // Import pages
 import 'package:study_helper_next/classSchedule.dart';
 import 'package:study_helper_next/login.dart';
-import 'package:study_helper_next/reciteRegister.dart';
+import 'package:study_helper_next/reciteRegister/reciteRegister.dart';
 import 'package:study_helper_next/reader.dart';
 
 void main() => runApp(MyApp());

@@ -26,10 +26,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Map<String, String> _UserInfo = {
-    'username': '',
-    'password': ''
-  };
+  Map<String, String> _UserInfo = {'username': '', 'password': ''};
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +44,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: <Widget>[
             ListBody(
-              children: <Widget>[
-                Image.asset('assets/simaface.jpg')
-              ],
+              children: <Widget>[Image.asset('assets/simaface.jpg')],
             ),
             ListTile(
               leading: Icon(Icons.change_history),
@@ -67,54 +62,50 @@ class _LoginPageState extends State<LoginPage> {
             Text(' '),
             Text(
               'Login to Study Helper',
-              style: TextStyle(
-                fontSize: 22
-              ),
+              style: TextStyle(fontSize: 22),
             ),
             Text(' '),
             Column(
-                children: <Widget>[
-                  TextField(
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Username',
-                    ),
-                    onChanged: (String value) {
-                      _UserInfo['username'] = value;
-                    },
+              children: <Widget>[
+                TextField(
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Username',
                   ),
-                  Text(' '),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                    ),
-                    onChanged: (String value) {
-                      _UserInfo['password'] = value;
-                    },
+                  onChanged: (String value) {
+                    _UserInfo['username'] = value;
+                  },
+                ),
+                Text(' '),
+                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
                   ),
-                  RaisedButton(
-                    color: Colors.blue,
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Colors.white
-                      ),
-                    ),
-                    onPressed: (){
-                      print(_UserInfo);
-                      Login(_UserInfo['username'], _UserInfo['password']);
-                    },
-                  )
-                ],
+                  onChanged: (String value) {
+                    _UserInfo['password'] = value;
+                  },
+                ),
+                RaisedButton(
+                  color: Colors.blue,
+                  child: Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    print(_UserInfo);
+                    Login(_UserInfo['username'], _UserInfo['password']);
+                  },
+                )
+              ],
             )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: () {},
         tooltip: 'WDNMD',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
