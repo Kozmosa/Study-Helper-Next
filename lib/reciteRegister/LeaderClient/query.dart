@@ -2,25 +2,59 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:study_helper_next/userInterfaces.dart';
 import 'package:study_helper_next/_globalVars.dart';
-import 'package:study_helper_next/io.dart' as YangIO;
+import 'package:study_helper_next/core/io.dart' as YangIO;
 
-List<Map<String, dynamic>> GetData(groupName, chapterID) {
-  var newPool = new GlobalVars();
-  String url = newPool.rootServer + '/api/group/$groupName/$chapterID/status';
-  YangIO.Network.GET(url, '', (resObj) {
-    print(resObj);
-  });
+var _allMsg = '';
+void addMsg(msg) {
+  print(msg);
+  _allMsg = '$_allMsg$msg';
 }
 
-class LeaderIndexPage extends StatefulWidget {
-  LeaderIndexPage({Key key}) : super(key: key);
+void PopupUI(context) {
+  print('wdnmd\n$_allMsg');
+  Alerts.Dialog(context, '查询成功', Text(_allMsg), () {});
+  _allMsg = '';
+}
+
+String GetData(groupName, chapterID, context) {
+  var newPool = new GlobalVars();
+  String allMsg = '';
+  String url = newPool.rootServer + '/api/group/$groupName/$chapterID/status';
+  print(url);
+  YangIO.Network.getJSON(url, (resObj) {
+    print(resObj);
+    String leader = resObj['status']['leader'];
+    List members = resObj['status']['members'];
+    Map status = resObj['status']['status'];
+    print(status);
+    for (var member in members) {
+      var msg;
+      if (status[member.toString()] == true) {
+        msg = '已背';
+      } else
+        msg = '未背';
+      YangIO.Network.pureGet(newPool.rootServer + '/api/student/name/$member',
+          (content) {
+        print(content['name']);
+        var name = content['name'];
+        allMsg += '$name $msg\n';
+        addMsg('$name $msg\n');
+      });
+      print(allMsg);
+    }
+  });
+  PopupUI(context);
+}
+
+class LeaderQueryPage extends StatefulWidget {
+  LeaderQueryPage({Key key}) : super(key: key);
   final String title = 'Leader UI';
 
   @override
-  _LeaderIndexPageState createState() => _LeaderIndexPageState();
+  _LeaderQueryPageState createState() => _LeaderQueryPageState();
 }
 
-class _LeaderIndexPageState extends State<LeaderIndexPage> {
+class _LeaderQueryPageState extends State<LeaderQueryPage> {
   String _groupName;
   List<Map<String, dynamic>> _members;
   @override
@@ -48,23 +82,13 @@ class _LeaderIndexPageState extends State<LeaderIndexPage> {
               ),
               onChanged: (value) {
                 _groupName = value;
-                print(_groupName);
               },
             ),
             CupertinoButton(
               color: Colors.blue,
               child: Text('查询组员背诵情况'),
-              onPressed: (){
-                Alerts.Dialog(
-                    context,
-                    '查询成功',
-                    Text('${_members[0]['number']}  ${_members[0]['status'].toString()}\n'
-                        '${_members[1]['number']}  ${_members[0]['status'].toString()}\n'
-                        '${_members[2]['number']}  ${_members[0]['status'].toString()}\n'
-                        '${_members[3]['number']}  ${_members[0]['status'].toString()}'),
-                    () {
-                    print('OK');
-                });
+              onPressed: () {
+                String allMsg = GetData(_groupName, '6.1', context);
               },
             ),
           ],

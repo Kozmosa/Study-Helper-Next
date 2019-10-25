@@ -14,6 +14,18 @@ class Network {
       callback(content);
     });
   }
+
+  static void getJSON(String url, Function callback) async {
+    var response = await http.get(url);
+    var content = jsonDecode(response.body);
+    callback(content);
+  }
+
+  static void pureGet(String url, Function callback) async {
+    var response = await http.get(url);
+    var content = jsonDecode(response.body);
+    callback(content);
+  }
 }
 
 class DataHandler {

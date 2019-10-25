@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import '../_globalVars.dart';
+import '../core/browser.dart';
 
-import 'browser.dart';
+GlobalVars _global = new GlobalVars();
 
 class ClassSchedulePage extends StatefulWidget {
   ClassSchedulePage({Key key}) : super(key: key);
@@ -19,7 +21,7 @@ class _ClassSchedulePageState extends State<ClassSchedulePage> {
     return Scaffold(
         body: Center(
             child: Browser(
-                url: 'https://xuyang1638.github.io/class-schedule/perDay.api.no.toolbar.html?day=$_day_of_the_week',
+                url: '${_global.classScheduleRootDomain}perDay.api.no.toolbar.html?day=$_day_of_the_week',
                 title: 'Class Schedule')
         )
     );

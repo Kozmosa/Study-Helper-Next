@@ -1,20 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '_globalVars.dart' as _globalVars;
-import 'io.dart' as YangIO;
+import 'package:study_helper_next/core/user.dart';
+import 'package:study_helper_next/userInterfaces.dart';
+import 'package:study_helper_next/reciteRegister/reciteRegister.dart';
 
-bool Login(username, password) {
+bool Login(username, password, BuildContext context) {
   print('Username: $username');
   print('Password: $password');
 
   //  Network query
-  final String url = '';
-  final newPool = new _globalVars.GlobalVars();
-
-//  YangIO.Network.GET(url, newPool.token, (json) {
-//    print(json);
-//    print(YangIO.DataHandler().JSON['parse'](json));
-//  });
+  User.Login(username, password, (flag) {
+    if(flag == true){
+      Alerts.Dialog(context, 'Login success', Text('OK'), () {
+        print('ok');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ReciteRegisterPage()),
+        );
+      });
+    } else {
+      Alerts.Dialog(context, 'Login failure', Text('failure'), () {
+        print('failure');
+      });
+    }
+  });
 }
 
 class LoginPage extends StatefulWidget {
@@ -96,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () {
                     print(_UserInfo);
-                    Login(_UserInfo['username'], _UserInfo['password']);
+                    Login(_UserInfo['username'], _UserInfo['password'], context);
                   },
                 )
               ],

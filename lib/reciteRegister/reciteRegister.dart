@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:study_helper_next/reciteRegister/LeaderClient/leader.index.dart';
+import './LeaderClient/home.dart';
+import './StudentClient/query.dart';
 
 class ReciteRegisterPage extends StatefulWidget {
   ReciteRegisterPage({Key key}) : super(key: key);
@@ -33,7 +34,10 @@ class _ReciteRegisterPageState extends State<ReciteRegisterPage> {
                   color: Colors.teal,
                   child: Text('I am the Student'),
                   onPressed: (){
-                    //
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => StudentHomePage())
+                    );
                   },
                 ),
                 Text(''),
@@ -43,7 +47,7 @@ class _ReciteRegisterPageState extends State<ReciteRegisterPage> {
                   onPressed: (){
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LeaderIndexPage())
+                        MaterialPageRoute(builder: (context) => LeaderHomePage())
                     );
                   },
                 ),
